@@ -6,6 +6,9 @@ axios.interceptors.response.use(success=>{
         Message.error({message:success.data.msg})
         return;
     }
+    if(success.data.msg){
+        Message.success({message:success.data.msg})
+    }
     return success.data;
 },error => {
     if(err.response.status == 504 || err.response.status == 404 ){
@@ -36,11 +39,38 @@ export const postKeyValueRequest=(url,params)=>{
            for(let i in data){
                ret+=encodeURIComponent(i)+'='+encodeURIComponent(data[i])+'&'
            }
-           console.log(ret);
            return ret;
         }],
         headers:{
            'Content-Type':'application/x-www-form-urlencoded'
         }
     });
+}
+export const postRequest=(url,params)=>{
+    return axios({
+        method:'post',
+        url:`${base}${url}`,
+        data:params
+    })
+}
+export const putRequest=(url,params)=>{
+    return axios({
+        method:'put',
+        url:`${base}${url}`,
+        data:params
+    })
+}
+export const getRequest=(url,params)=>{
+    return axios({
+        method:'get',
+        url:`${base}${url}`,
+        data:params
+    })
+}
+export const deleteRequest=(url,params)=>{
+    return axios({
+        method:'delete',
+        url:`${base}${url}`,
+        data:params
+    })
 }
